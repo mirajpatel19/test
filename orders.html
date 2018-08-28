@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Order List</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <img src="./images/joseph-farms-cheese-header.jpg" alt="Joseph Gallo Farms Image">
+  <h1 id='title'>Cheese Orders</h1>
+
+  <div ng-app="myApp" ng-controller="orderCtrl">
+    <div id="orderListForm">
+      <form name="searchDate">
+        <label>
+          <strong>Cheese Sale Date</strong>
+          <span class="required">*</span>
+        </label>
+        <input type="date" name="date" ng-model="data.date">
+        <button ng-click="send()">
+          <strong>Search</strong>
+        </button>
+      </form>
+    </div>
+    <br />
+    <br />
+    <b>Filter:</b>
+    <input ng-model="query" type="text" />
+    <a id="navigateLink" href="/picklist.html">Go to Pick List</a>
+    <table id="sortTable">
+      <tr>
+        <th>
+          <a id='id' href="" ng-click="sortField = 'id'; reverse = !reverse">Id</th>
+        <th>
+          <a id="useridHeading" href="" ng-click="sortField = 'userid'; reverse = !reverse">Box #</th>
+        <th>
+          <a id="empnumHeading" href="" ng-click="sortField = 'empnum'; reverse = !reverse">Employee Number</th>
+        <th>
+          <a id="fnameHeading" href="" ng-click="sortField = 'fname'; reverse = !reverse">First Name</th>
+        <th>
+          <a id="lnameHeading" href="" ng-click="sortField = 'lname'; reverse = !reverse">Last Name</th>
+        <th>
+          <a id="saledateHeading" href="" ng-click="sortField = 'saledate'; reverse = !reverse">Sale Date</th>
+        <th>
+          <a id="varietyHeading" href="" ng-click="sortField = 'variety'; reverse = !reverse">Variety</th>
+        <th>
+          <a id="styleHeading" href="" ng-click="sortField = 'style'; reverse = !reverse">Style</th>
+        <th>
+          <a id="sizeHeading" href="" ng-click="sortField = 'size'; reverse = !reverse">Size</th>
+        <th>
+          <a id="qtyHeading" href="" ng-click="sortField = 'qty'; reverse = !reverse">Qty</th>
+        <th>
+          <a id="qtyHeading" href="" ng-click="sortField = 'pounds'; reverse = !reverse">Pounds</th>
+        <th>
+          <a id="orderdateHeading" href="" ng-click="sortField = 'orderdate'; reverse = !reverse">Order Date</th>
+        <th>Delete</th>
+      </tr>
+      <tr id="sortData" ng-repeat="(key,value) in orders | filter:query | orderBy:sortField:!reverse">
+        <td id='id'>{{value.id}}</td>
+        <td>{{value.userid}}</td>
+        <td>{{value.empnum}}</td>
+        <td>{{value.fname}}</td>
+        <td>{{value.lname}}</td>
+        <td>{{value.saledate}}</td>
+        <td>{{value.variety}}</td>
+        <td>{{value.style}}</td>
+        <td>{{value.size}}</td>
+        <td>{{value.qty}}</td>
+        <td>{{value.pounds}}</td>
+        <td>{{value.orderdate}}</td>
+        <td ng-click='deleteFunc(value.id, key)'>
+          <a href="">Delete</a>
+        </td>
+      </tr>
+    </table>
+    <hr>
+    <form ng-submit="addFunc($scope.order)">
+      <input id="addUserid" type="number" ng-model="$scope.order.userid" placeholder="Box #" class="testInput">
+      <input id="addEmpnum" type="number" ng-model="$scope.order.empnum" placeholder="Employee Number">
+      <input id="addFname" type="text" ng-model="$scope.order.fname" placeholder="First Name">
+      <input id="addLname" type="text" ng-model="$scope.order.lname" placeholder="Last Name">
+      <input id="addSaledate" type="text" ng-model="$scope.order.saledate" placeholder="Sale Date">
+      <input id="addVariety" type="text" ng-model="$scope.order.variety" placeholder="Variety">
+      <input id="addStyle" type="text" ng-model="$scope.order.style" placeholder="Style">
+      <input id="addSize" type="text" ng-model="$scope.order.size" placeholder="Size">
+      <input id="addQty" type="number" ng-model="$scope.order.qty" placeholder="Qty">
+      <input id="addPounds" type="number" ng-model="$scope.order.pounds" placeholder="Pounds">
+      <input id="add" type="submit" value="add">
+    </form>
+  </div>
+
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('orderCtrl', function ($scope, $http) {
+      $scope.date = ' ';
+
+      // $scope.filter = myService.style();
+
+      $scope.send = function () {
+        console.log("inside send function");
+        console.log($scope.data.date);
+
+        $http.post('/orders', {
+            'date': $scope.data.date
+          })
+          .then(function (response) {
+            $scope.orders = response.data;
+            console.log($scope.orders);
+            $scope.sortField = 'userid';
+            $scope.reverse = true;
+            //console.log(response.data, "Response from post request!")
+          })
+      }
+      /* for ( i in obj) {
+          if (obj[i]['id'] == id) {
+            //delete!
+          }
+
+      }
+
+      */
+      $scope.deleteFunc = function (value, key) {
+        console.log('inside deleteFunc');
+        console.log(value, key);
+
+        $http.post('/deleteOrder', {
+          'id': value
+        })
+        for (key in $scope.orders) {
+          if ($scope.orders[key]['id'] == value) {
+            console.log($scope.orders[key]);
+            $scope.orders.splice(key, 1);
+          }
+        }
+      }
+      $scope.addFunc = function (order) {
+        console.log('here is the orders obj from addFunc: ');
+        console.log(order);
+        console.log(order.userid);
+        $scope.orders.push(order);
+
+        $http.post('/addOrder', {
+          'userid': order.userid,
+          'empnum': order.empnum,
+          'fname': order.fname,
+          'lname': order.lname,
+          'saledate': order.saledate,
+          'variety': order.variety,
+          'style': order.style,
+          'size': order.size,
+          'qty': order.qty,
+          'pounds': order.pounds
+        })
+        // order.userid = '';
+        // order.empnum = '';
+        // order.fname = '';
+        // order.lname = '';
+        // order.saledate = '';
+        // order.variety = '';
+        // order.style = '';
+        // order.size = '';
+        // order.qty = '';
+      }
+    });
+  </script>
+</body>
+
+</html>
