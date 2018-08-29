@@ -468,7 +468,7 @@ app.post('/payRoll', function (req, res) {
       res.send(result.rows);
       res.end;
     });
-    
+
   });
 });
 
@@ -497,7 +497,7 @@ app.post('/setPrices', function (req, res) {
       res.send(result.rows);
       res.end;
     });
-    
+
   });
 });
 
@@ -524,7 +524,7 @@ app.post('/addPrices', function (req, res) {
   var newDate = month + '/' + day + '/' + year;
   saledate = newDate;
   console.log("here is my new date: " + saledate);
-  
+
 
   //SQL DATABASE
   client.connect(function (err) {
@@ -533,19 +533,21 @@ app.post('/addPrices', function (req, res) {
     // }
     console.log("Database connected for setPrices!");
 
-    client.query("insert into prices (saledate, price) values ($1, $2);",[saledate, price], function (err, result, fields) {
+    client.query("insert into prices (saledate, price) values ($1, $2);", [saledate, price], function (err, result, fields) {
       console.log(result.rows);
       if (err) {
         throw err;
       }
-      // console.log(typeof result.rows.empnum);
-      //result.rows.totalAmount = 3.56;
-      //console.log(result.rows);
-
-      res.send(result.rows);
-      res.end;
     });
-    
+
+      //update the order table with the prices! CREATE A NEW FUNCTION CALLED updateOrders.git ini
+      client.query("select id, pounds from orders"), function(err, result) {
+        console.log("into update query");
+          console.log(result.rows);
+      }
+      console.log("End of the function!");
+      res.end;
+
   });
 });
 
@@ -557,9 +559,9 @@ app.post('/deletePrice', function (req, res) {
 
   //SQL DATABASE
   client.connect(function (err) {
-  //   if (err) {
-  //     throw err;
-  //   }
+    //   if (err) {
+    //     throw err;
+    //   }
     console.log("Database connected for deletePrice!");
     client.query("delete from prices where id=$1", [removeId], function (err, result, fields) {
       if (err) {
@@ -623,12 +625,12 @@ app.post('/deleteOrder', function (req, res) {
   //   if (err) {
   //     throw err;
   //   }
-    console.log("Database connected for deleteOrder!");
-    client.query("delete from orders where  id=$1", [removeId], function (err, result, fields) {
-      if (err) {
-        throw err;
-      }
-    });
+  console.log("Database connected for deleteOrder!");
+  client.query("delete from orders where  id=$1", [removeId], function (err, result, fields) {
+    if (err) {
+      throw err;
+    }
+  });
   //});
 });
 
@@ -651,7 +653,7 @@ app.post('/addOrder', function (req, res) {
     }
   });
   //SELECT distinct fname FROM users where fname=$1 and lname=$2 and empnum=$3", [firstname, lastname, employeenumber]
-  client.query("select id from orders where userid=$1 and saledate=$2 and variety=$3 and style=$4 and size=$5 and qty=$6 and pounds=$7", [addOrder.userid, addOrder.saledate, addOrder.variety, addOrder.style, addOrder.size, addOrder.qty, addOrder.pounds], function (err, result, fields) { 
+  client.query("select id from orders where userid=$1 and saledate=$2 and variety=$3 and style=$4 and size=$5 and qty=$6 and pounds=$7", [addOrder.userid, addOrder.saledate, addOrder.variety, addOrder.style, addOrder.size, addOrder.qty, addOrder.pounds], function (err, result, fields) {
     if (err) {
       throw err;
     }

@@ -281,3 +281,7 @@ select {
 #add {
   width: 5.8%;
 }
+
+#setPricesButton {
+  width: 100px;
+}

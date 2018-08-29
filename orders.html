@@ -115,7 +115,7 @@
             //console.log(response.data, "Response from post request!")
           })
       }
-    
+
       $scope.deleteFunc = function (value, key) {
         console.log('Into deleteFunc to delete data on orders.html with Id, index: ');
         console.log(value, key);
@@ -130,60 +130,60 @@
           }
         }
       }
-      
+
       $scope.addFunc = function () {
         console.log('Into addFunc to add data on orders.html: ');
 
         $http.post('/addOrder', {
-          'userid': $scope.userid,
-          'empnum': $scope.empnum,
-          'fname': $scope.fname,
-          'lname': $scope.lname,
-          'saledate': $scope.saledate,
-          'variety': $scope.variety,
-          'style': $scope.style,
-          'size': $scope.size,
-          'qty': $scope.qty,
-          'pounds': $scope.pounds
-        })
-         .then(function (response) {
-             $scope.idData = response.data;
-             console.log("into response for addFunc: ");
-            
-          console.log("here is id:");
-              console.log($scope.idData);
-              console.log($scope.idData[0].id);
+            'userid': $scope.userid,
+            'empnum': $scope.empnum,
+            'fname': $scope.fname,
+            'lname': $scope.lname,
+            'saledate': $scope.saledate,
+            'variety': $scope.variety,
+            'style': $scope.style,
+            'size': $scope.size,
+            'qty': $scope.qty,
+            'pounds': $scope.pounds
+          })
+          .then(function (response) {
+            $scope.idData = response.data;
+            console.log("into response for addFunc: ");
 
-              $scope.orders.push({
-          'id': $scope.idData[0].id,
-          'userid': $scope.userid,
-          'empnum': $scope.empnum,
-          'fname': $scope.fname,
-          'lname': $scope.lname,
-          'saledate': $scope.saledate,
-          'variety': $scope.variety,
-          'style': $scope.style,
-          'size': $scope.size,
-          'qty': $scope.qty,
-          'pounds': $scope.pounds
-        });
+            console.log("here is id:");
+            console.log($scope.idData);
+            console.log($scope.idData[0].id);
 
-        $scope.userid = '';
-        $scope.empnum = '';
-        $scope.fname = '';
-        $scope.lname = '';
-        $scope.saledate = '';
-        $scope.variety = '';
-        $scope.style = '';
-        $scope.size = '';
-        $scope.qty = '';
-        $scope.pounds = '';
-         });
+            $scope.orders.push({
+              'id': $scope.idData[0].id,
+              'userid': $scope.userid,
+              'empnum': $scope.empnum,
+              'fname': $scope.fname,
+              'lname': $scope.lname,
+              'saledate': $scope.saledate,
+              'variety': $scope.variety,
+              'style': $scope.style,
+              'size': $scope.size,
+              'qty': $scope.qty,
+              'pounds': $scope.pounds
+            });
+
+            $scope.userid = '';
+            $scope.empnum = '';
+            $scope.fname = '';
+            $scope.lname = '';
+            $scope.saledate = '';
+            $scope.variety = '';
+            $scope.style = '';
+            $scope.size = '';
+            $scope.qty = '';
+            $scope.pounds = '';
+          });
         // console.log("outside of http");
         // //console.log(idData[0].id);
         // console.log($scope.idData);
 
-        
+
       }
     });
   </script>

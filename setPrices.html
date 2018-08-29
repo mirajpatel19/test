@@ -16,24 +16,29 @@
     <div ng-app="myApp" ng-controller="setPricesCtrl">
         <b>Filter:</b>
         <input ng-model="query" type="text" />
-        <table id="">
+        <table id="sortTable">
             <tr>
                 <th>
                     <a id="heading" href="" ng-click="sortField = 'saledate'; reverse = !reverse">Cheese Sale date</th>
                 <th>
                     <a id="heading" href="" ng-click="sortField = 'price'; reverse = !reverse">Price</th>
-                <th>
-                    <a>Delete</th>
             </tr>
             <tr>
                 <th>
                     <form ng-submit="addFunc()">
                         <input id="addSaleDate" type="date" ng-model="saledate" required>
-                        <input id="addPrice" type="text" ng-model="price" placeholder="0.00" required>
-                        <input id="add" type="submit" value="add">
+                </th>
+                <th>
+                    <input id="addPrice" type="text" ng-model="price" placeholder="0.00" required>
+                </th>
+                <th>
+                    <input id='setPricesButton' type="submit" value="add">
                     </form>
                 </th>
+
             </tr>
+        
+
             <tr id="sortData" ng-repeat="(key,value) in orders | filter:query | orderBy:sortField:!reverse">
                 <!-- <td>{{value}}</td>
                 <td>{{key}}</td> -->
@@ -83,6 +88,8 @@
                     'saledate': newDate,
                     'price': $scope.price
                 });
+                $scope.saledate = '';
+                $scope.price = '';
 
             }
 
