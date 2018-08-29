@@ -1,3 +1,4 @@
+//HTML
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -21,6 +22,12 @@
           <span class="required">*</span>
         </label>
         <input type="date" name="date" ng-model="data.date">
+        <br />
+        <label>
+          <strong>Market Pound Value</strong>
+          <span class="required">*</span>
+        </label>
+        <input type="text" name="dollarValue" min="0.01" step="0.01" ng-model="dollarValue" placeholder="0.00">
         <br />
         <button ng-click="send()">
           <strong>Search</strong>
@@ -113,3 +120,66 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//serverside
+app.post('/payRoll', function (req, res) {
+  /* Handling the AngularJS post request*/
+  console.log("Pulling the date from database for pay roll MR.: ");
+
+  console.log(req.body);
+
+  var date = req.body.date;
+  console.log(date);
+  var dollarValue = req.body.dollarValue;
+  console.log(dollarValue);
+
+  var newDate = new Date(date);
+  var day = newDate.getDate();
+  var month = newDate.getMonth() + 1;
+  var year = newDate.getFullYear();
+
+  if (day < 10) {
+    day = '0' + day
+  }
+  if (month < 10) {
+    month = '0' + month
+  }
+  var newDate = month + '/' + day + '/' + year;
+  console.log("here is my new date: " + newDate);
+
+  //SQL DATABASE
+  client.connect(function (err) {
+    // if (err) {
+    //   throw err;
+    // }
+    console.log("Database connected for pay roll!");
+
+    client.query("select users.empnum, users.fname, users.lname, sum(orders.pounds) as totalpounds from users inner join orders on users.id = orders.userid where orders.saledate=$1 group by users.empnum, users.fname, users.lname;", [newDate], function (err, result, fields) {
+      //select orders.userid, users.empnum, users.fname, users.lname, orders.saledate, orders.variety, orders.style, orders.size, orders.qty, orders.orderdate from users inner join orders on users.id = orders.userid where orders.saledate=$1
+      console.log(result.rows);
+      if (err) {
+        throw err;
+      }
+      // console.log(typeof result.rows.empnum);
+      //result.rows.totalAmount = 3.56;
+      //console.log(result.rows);
+
+      res.send(result.rows);
+      res.end;
+    });
+  });
+});

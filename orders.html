@@ -77,17 +77,18 @@
       </tr>
     </table>
     <hr>
-    <form ng-submit="addFunc($scope.order)">
-      <input id="addUserid" type="number" ng-model="$scope.order.userid" placeholder="Box #" class="testInput">
-      <input id="addEmpnum" type="number" ng-model="$scope.order.empnum" placeholder="Employee Number">
-      <input id="addFname" type="text" ng-model="$scope.order.fname" placeholder="First Name">
-      <input id="addLname" type="text" ng-model="$scope.order.lname" placeholder="Last Name">
-      <input id="addSaledate" type="text" ng-model="$scope.order.saledate" placeholder="Sale Date">
-      <input id="addVariety" type="text" ng-model="$scope.order.variety" placeholder="Variety">
-      <input id="addStyle" type="text" ng-model="$scope.order.style" placeholder="Style">
-      <input id="addSize" type="text" ng-model="$scope.order.size" placeholder="Size">
-      <input id="addQty" type="number" ng-model="$scope.order.qty" placeholder="Qty">
-      <input id="addPounds" type="number" ng-model="$scope.order.pounds" placeholder="Pounds">
+    <form ng-submit="addFunc()">
+      <input id="addId" type="number" ng-model="id" placeholder="Id" hidden>
+      <input id="addUserid" type="number" ng-model="userid" placeholder="Box #" required>
+      <input id="addEmpnum" type="number" ng-model="empnum" placeholder="Employee Number" required>
+      <input id="addFname" type="text" ng-model="fname" placeholder="First Name" required>
+      <input id="addLname" type="text" ng-model="lname" placeholder="Last Name" required>
+      <input id="addSaledate" type="text" ng-model="saledate" placeholder="Sale Date" required>
+      <input id="addVariety" type="text" ng-model="variety" placeholder="Variety" required>
+      <input id="addStyle" type="text" ng-model="style" placeholder="Style" required>
+      <input id="addSize" type="text" ng-model="size" placeholder="Size" required>
+      <input id="addQty" type="number" ng-model="qty" placeholder="Qty" required>
+      <input id="addPounds" type="text" ng-model="pounds" placeholder="Pounds" required>
       <input id="add" type="submit" value="add">
     </form>
   </div>
@@ -100,7 +101,7 @@
       // $scope.filter = myService.style();
 
       $scope.send = function () {
-        console.log("inside send function");
+        console.log("inside send function with date: ");
         console.log($scope.data.date);
 
         $http.post('/orders', {
@@ -108,22 +109,15 @@
           })
           .then(function (response) {
             $scope.orders = response.data;
-            console.log($scope.orders);
+            //console.log($scope.orders);
             $scope.sortField = 'userid';
             $scope.reverse = true;
             //console.log(response.data, "Response from post request!")
           })
       }
-      /* for ( i in obj) {
-          if (obj[i]['id'] == id) {
-            //delete!
-          }
-
-      }
-
-      */
+    
       $scope.deleteFunc = function (value, key) {
-        console.log('inside deleteFunc');
+        console.log('Into deleteFunc to delete data on orders.html with Id, index: ');
         console.log(value, key);
 
         $http.post('/deleteOrder', {
@@ -136,33 +130,60 @@
           }
         }
       }
-      $scope.addFunc = function (order) {
-        console.log('here is the orders obj from addFunc: ');
-        console.log(order);
-        console.log(order.userid);
-        $scope.orders.push(order);
+      
+      $scope.addFunc = function () {
+        console.log('Into addFunc to add data on orders.html: ');
 
         $http.post('/addOrder', {
-          'userid': order.userid,
-          'empnum': order.empnum,
-          'fname': order.fname,
-          'lname': order.lname,
-          'saledate': order.saledate,
-          'variety': order.variety,
-          'style': order.style,
-          'size': order.size,
-          'qty': order.qty,
-          'pounds': order.pounds
+          'userid': $scope.userid,
+          'empnum': $scope.empnum,
+          'fname': $scope.fname,
+          'lname': $scope.lname,
+          'saledate': $scope.saledate,
+          'variety': $scope.variety,
+          'style': $scope.style,
+          'size': $scope.size,
+          'qty': $scope.qty,
+          'pounds': $scope.pounds
         })
-        // order.userid = '';
-        // order.empnum = '';
-        // order.fname = '';
-        // order.lname = '';
-        // order.saledate = '';
-        // order.variety = '';
-        // order.style = '';
-        // order.size = '';
-        // order.qty = '';
+         .then(function (response) {
+             $scope.idData = response.data;
+             console.log("into response for addFunc: ");
+            
+          console.log("here is id:");
+              console.log($scope.idData);
+              console.log($scope.idData[0].id);
+
+              $scope.orders.push({
+          'id': $scope.idData[0].id,
+          'userid': $scope.userid,
+          'empnum': $scope.empnum,
+          'fname': $scope.fname,
+          'lname': $scope.lname,
+          'saledate': $scope.saledate,
+          'variety': $scope.variety,
+          'style': $scope.style,
+          'size': $scope.size,
+          'qty': $scope.qty,
+          'pounds': $scope.pounds
+        });
+
+        $scope.userid = '';
+        $scope.empnum = '';
+        $scope.fname = '';
+        $scope.lname = '';
+        $scope.saledate = '';
+        $scope.variety = '';
+        $scope.style = '';
+        $scope.size = '';
+        $scope.qty = '';
+        $scope.pounds = '';
+         });
+        // console.log("outside of http");
+        // //console.log(idData[0].id);
+        // console.log($scope.idData);
+
+        
       }
     });
   </script>

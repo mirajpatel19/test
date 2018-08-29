@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Set Prices</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <img src="./images/joseph-farms-cheese-header.jpg" alt="Joseph Gallo Farms Image">
+    <h1 id='title'>Set Prices</h1>
+
+    <div ng-app="myApp" ng-controller="setPricesCtrl">
+        <b>Filter:</b>
+        <input ng-model="query" type="text" />
+        <table id="">
+            <tr>
+                <th>
+                    <a id="heading" href="" ng-click="sortField = 'saledate'; reverse = !reverse">Cheese Sale date</th>
+                <th>
+                    <a id="heading" href="" ng-click="sortField = 'price'; reverse = !reverse">Price</th>
+                <th>
+                    <a>Delete</th>
+            </tr>
+            <tr>
+                <th>
+                    <form ng-submit="addFunc()">
+                        <input id="addSaleDate" type="date" ng-model="saledate" required>
+                        <input id="addPrice" type="text" ng-model="price" placeholder="0.00" required>
+                        <input id="add" type="submit" value="add">
+                    </form>
+                </th>
+            </tr>
+            <tr id="sortData" ng-repeat="(key,value) in orders | filter:query | orderBy:sortField:!reverse">
+                <!-- <td>{{value}}</td>
+                <td>{{key}}</td> -->
+                <td>{{value.saledate}}</td>
+                <td>{{value.price}}</td>
+                <td ng-click='deleteFunc(value.id, key)'>
+                    <a href="">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('setPricesCtrl', function ($scope, $http) {
+
+            console.log("inside setPricesCtrl function");
+            var posting = $http({
+                method: 'POST',
+                url: '/setPrices'
+            }).then(function (response) {
+                $scope.orders = response.data;
+            });
+
+            $scope.addFunc = function () {
+                console.log("Inside addFunc");
+                console.log($scope.saledate);
+                console.log($scope.price);
+                $http.post('/addPrices', {
+                    'saledate': $scope.saledate,
+                    'price': $scope.price
+                })
+                var newDate = new Date($scope.saledate);
+                var day = newDate.getDate();
+                var month = newDate.getMonth() + 1;
+                var year = newDate.getFullYear();
+
+                if (day < 10) {
+                    day = '0' + day
+                }
+                if (month < 10) {
+                    month = '0' + month
+                }
+                var newDate = month + '/' + day + '/' + year;
+                console.log("here is my new date: " + newDate);
+                $scope.orders.push({
+                    'saledate': newDate,
+                    'price': $scope.price
+                });
+
+            }
+
+            $scope.deleteFunc = function (value, key) {
+                console.log('Into deleteFunc to delete data on setPrices.html with Id, index: ');
+                console.log(value, key);
+
+                $http.post('/deletePrice', {
+                    'id': value
+                })
+                for (key in $scope.orders) {
+                    if ($scope.orders[key]['id'] == value) {
+                        console.log($scope.orders[key]);
+                        $scope.orders.splice(key, 1);
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
+<!-- $scope.addFunc = function () {
+    console.log('Into addFunc to add data on orders.html: ');
+
+    $http.post('/addPrices', {
+      'saledate': $scope.saledate,
+      'price': $scope.price
+    })
+     .then(function (response) {
+         $scope.idData = response.data;
+         console.log("into response for addFunc: ");
+        
+      console.log("here is id:");
+          console.log($scope.idData);
+          console.log($scope.idData[0].id);
+
+          $scope.orders.push({
+      'id': $scope.idData[0].id,
+      'userid': $scope.userid,
+      'empnum': $scope.empnum,
+      'fname': $scope.fname,
+      'lname': $scope.lname,
+      'saledate': $scope.saledate,
+      'variety': $scope.variety,
+      'style': $scope.style,
+      'size': $scope.size,
+      'qty': $scope.qty,
+      'pounds': $scope.pounds
+    });
+
+    $scope.userid = '';
+    $scope.empnum = '';
+    $scope.fname = '';
+    $scope.lname = '';
+    $scope.saledate = '';
+    $scope.variety = '';
+    $scope.style = '';
+    $scope.size = '';
+    $scope.qty = '';
+    $scope.pounds = '';
+     });
+    // console.log("outside of http");
+    // //console.log(idData[0].id);
+    // console.log($scope.idData);
+
+    
+  }
+}); -->
