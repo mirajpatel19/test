@@ -28,10 +28,17 @@
     </div>
     <br />
     <br />
+
+    <div id="filter">
     <b>Filter:</b>
     <input ng-model="query" type="search" placeholder="Search">
     <a id="navigateLink" href="/orders.html">Go to Orders</a>
-    <table id="sortTable">
+  </div>
+  <br>
+
+
+
+    <table id="sortTablePickList">
 
       <th>
         <a id="heading" href="" ng-click="sortField = 'saledate'; reverse = !reverse">Sale Date</th>

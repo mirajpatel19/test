@@ -14,9 +14,16 @@
     <h1 id='title'>Set Prices</h1>
 
     <div ng-app="myApp" ng-controller="setPricesCtrl">
-        <b>Filter:</b>
+        
+        <div id="filter">
+        <b>Filter:</b> 
         <input ng-model="query" type="text" />
-        <table id="sortTable">
+        </div>
+        <br>
+
+
+
+        <table id="sortTableTest">
             <tr>
                 <th>
                     <a id="heading" href="" ng-click="sortField = 'saledate'; reverse = !reverse">Cheese Sale date</th>
@@ -44,7 +51,7 @@
                 <td>{{key}}</td> -->
                 <td>{{value.saledate}}</td>
                 <td>{{value.price}}</td>
-                <td ng-click='deleteFunc(value.id, key)'>
+                <td id='test' ng-click='deleteFunc(value, key)'>
                     <a href="">Delete</a>
                 </td>
             </tr>
@@ -98,10 +105,11 @@
                 console.log(value, key);
 
                 $http.post('/deletePrice', {
-                    'id': value
+                    'id': value.id,
+                    'saledate': value.saledate
                 })
                 for (key in $scope.orders) {
-                    if ($scope.orders[key]['id'] == value) {
+                    if ($scope.orders[key]['id'] == value.id) {
                         console.log($scope.orders[key]);
                         $scope.orders.splice(key, 1);
                     }

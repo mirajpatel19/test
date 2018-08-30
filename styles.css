@@ -173,12 +173,19 @@ select {
 }
 
 #orderListForm,
-#pickListForm {
+#pickListForm,
+#payRollForm {
   /* display: inline-block; */
   /* background-color: red; */
   /* border-radius: 10px; */
-  width: 338px;
-  margin: 0 auto;
+  /* width: 338px;
+  margin: 0 auto; */
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  /* border: 3px solid green; */
+  text-align: center;
+
 }
 
 #fieldSetPersonal {
@@ -284,4 +291,31 @@ select {
 
 #setPricesButton {
   width: 100px;
+}
+
+#sortTableTest {
+  //background-color: red;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#sortTablePayRoll {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+}
+
+#sortTablePickList {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+#filter {
+  text-align: center;
+}
+
+#filter input {
+  width: 30%;
 }

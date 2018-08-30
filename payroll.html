@@ -21,7 +21,6 @@
           <span class="required">*</span>
         </label>
         <input type="date" name="date" ng-model="data.date">
-        <br />
         <button ng-click="send()">
           <strong>Search</strong>
         </button>
@@ -29,9 +28,15 @@
     </div>
     <br />
     <br />
+
+    <div id="filter">
     <b>Filter:</b>
     <input ng-model="query" type="text" />
-    <table id="sortTable">
+  </div>
+  <br>
+
+
+    <table id="sortTablePayRoll">
       <tr>
         <th>
           <a id="heading" href="" ng-click="sortField = 'empnum'; reverse = !reverse">Employee Number</th>
@@ -50,7 +55,7 @@
         <td>{{order.fname}}</td>
         <td>{{order.lname}}</td>
         <td>{{order.totalpounds}}</td>
-        <td>{{'$' + order.totalAmount}}</td>
+        <td>{{'$' + order.totalamount}}</td>
 
       </tr>
     </table>
@@ -72,7 +77,6 @@
           url: '/payRoll',
           data: {
             'date': $scope.data.date,
-            //'dollarValue': $scope.dollarValue
           }
         }).then(function (response) {
           $scope.orders = response.data;
@@ -80,29 +84,8 @@
           //console.log($scope.orders.fname[1]);
 
           console.log("Object from the server for orders: ")
-          console.log($scope.orders[0]);
-          console.log('Dollar value enter: ' + $scope.dollarValue);
-
-          angular.forEach($scope.orders, function (orders) {
-            var i = 0;
-            // console.log(orders);
-            // console.log($scope.dollarValue);
-            // console.log(orders.totalpounds);
-
-            // $scope.myValue = $scope.dollarValue.length;
-            // console.log($scope.myValue);
-
-            if ($scope.dollarValue == undefined) {
-              $scope.dollarValue = 0.00;
-              alert("Dollar Value is not entered! Please enter the dollar value.");
-            }
-            $scope.calPounds = orders.totalpounds * $scope.dollarValue;
-            console.log($scope.calPounds);
-
-            $scope.orders[i].totalAmount = $scope.calPounds;
-            console.log('Object after doing math: ')
-            console.log($scope.orders);
-          })
+          //console.log($scope.orders[0]);
+          //console.log('Dollar value enter: ' + $scope.dollarValue);
 
           $scope.sortField = 'userid';
           $scope.reverse = true;
