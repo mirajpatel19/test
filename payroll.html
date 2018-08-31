@@ -6,7 +6,6 @@
   <title>Pay Roll</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <link rel="stylesheet" href="styles.css">
-
 </head>
 
 <body>
@@ -30,11 +29,10 @@
     <br />
 
     <div id="filter">
-    <b>Filter:</b>
-    <input ng-model="query" type="text" />
-  </div>
-  <br>
-
+      <b>Filter:</b>
+      <input ng-model="query" type="text" />
+    </div>
+    <br>
 
     <table id="sortTablePayRoll">
       <tr>
@@ -48,7 +46,6 @@
           <a id="heading" href="" ng-click="sortField = 'pounds'; reverse = !reverse">Total Pounds</th>
         <th>
           <a id="heading" href="" ng-click="sortField = 'pounds'; reverse = !reverse">Total Amount</th>
-
       </tr>
       <tr id="sortData" ng-repeat="order in orders | filter:query | orderBy:sortField:!reverse">
         <td>{{order.empnum}}</td>
@@ -56,7 +53,6 @@
         <td>{{order.lname}}</td>
         <td>{{order.totalpounds}}</td>
         <td>{{'$' + order.totalamount}}</td>
-
       </tr>
     </table>
   </div>
@@ -65,28 +61,18 @@
     var app = angular.module('myApp', []);
     app.controller('payRollCtrl', function ($scope, $http) {
       $scope.date = ' ';
-      //$scope.dollarValue = ' ';
 
       $scope.send = function () {
-        console.log("inside send function");
-        console.log($scope.data.date);
+        console.log("inside send function for payroll.html");
 
         var posting = $http({
           method: 'POST',
-          /*posting to /post */
           url: '/payRoll',
           data: {
             'date': $scope.data.date,
           }
         }).then(function (response) {
           $scope.orders = response.data;
-          //console.log($scope.orders[0].totalpounds);
-          //console.log($scope.orders.fname[1]);
-
-          console.log("Object from the server for orders: ")
-          //console.log($scope.orders[0]);
-          //console.log('Dollar value enter: ' + $scope.dollarValue);
-
           $scope.sortField = 'userid';
           $scope.reverse = true;
         })

@@ -6,7 +6,6 @@
     <title>Set Prices</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <link rel="stylesheet" href="styles.css">
-
 </head>
 
 <body>
@@ -14,14 +13,11 @@
     <h1 id='title'>Set Prices</h1>
 
     <div ng-app="myApp" ng-controller="setPricesCtrl">
-        
         <div id="filter">
-        <b>Filter:</b> 
-        <input ng-model="query" type="text" />
+            <b>Filter:</b>
+            <input ng-model="query" type="text" />
         </div>
         <br>
-
-
 
         <table id="sortTableTest">
             <tr>
@@ -42,13 +38,8 @@
                     <input id='setPricesButton' type="submit" value="add">
                     </form>
                 </th>
-
             </tr>
-        
-
             <tr id="sortData" ng-repeat="(key,value) in orders | filter:query | orderBy:sortField:!reverse">
-                <!-- <td>{{value}}</td>
-                <td>{{key}}</td> -->
                 <td>{{value.saledate}}</td>
                 <td>{{value.price}}</td>
                 <td id='test' ng-click='deleteFunc(value, key)'>
@@ -61,7 +52,6 @@
     <script>
         var app = angular.module('myApp', []);
         app.controller('setPricesCtrl', function ($scope, $http) {
-
             console.log("inside setPricesCtrl function");
             var posting = $http({
                 method: 'POST',
@@ -71,9 +61,7 @@
             });
 
             $scope.addFunc = function () {
-                console.log("Inside addFunc");
-                console.log($scope.saledate);
-                console.log($scope.price);
+                console.log("Inside addFunc on setPrices.html");
                 $http.post('/addPrices', {
                     'saledate': $scope.saledate,
                     'price': $scope.price
@@ -90,20 +78,17 @@
                     month = '0' + month
                 }
                 var newDate = month + '/' + day + '/' + year;
-                console.log("here is my new date: " + newDate);
                 $scope.orders.push({
                     'saledate': newDate,
                     'price': $scope.price
                 });
+                //Clearing form values.
                 $scope.saledate = '';
                 $scope.price = '';
-
             }
 
             $scope.deleteFunc = function (value, key) {
-                console.log('Into deleteFunc to delete data on setPrices.html with Id, index: ');
-                console.log(value, key);
-
+                console.log('Into deleteFunc to delete data on setPrices.html');
                 $http.post('/deletePrice', {
                     'id': value.id,
                     'saledate': value.saledate
@@ -120,54 +105,3 @@
 </body>
 
 </html>
-
-
-
-
-<!-- $scope.addFunc = function () {
-    console.log('Into addFunc to add data on orders.html: ');
-
-    $http.post('/addPrices', {
-      'saledate': $scope.saledate,
-      'price': $scope.price
-    })
-     .then(function (response) {
-         $scope.idData = response.data;
-         console.log("into response for addFunc: ");
-        
-      console.log("here is id:");
-          console.log($scope.idData);
-          console.log($scope.idData[0].id);
-
-          $scope.orders.push({
-      'id': $scope.idData[0].id,
-      'userid': $scope.userid,
-      'empnum': $scope.empnum,
-      'fname': $scope.fname,
-      'lname': $scope.lname,
-      'saledate': $scope.saledate,
-      'variety': $scope.variety,
-      'style': $scope.style,
-      'size': $scope.size,
-      'qty': $scope.qty,
-      'pounds': $scope.pounds
-    });
-
-    $scope.userid = '';
-    $scope.empnum = '';
-    $scope.fname = '';
-    $scope.lname = '';
-    $scope.saledate = '';
-    $scope.variety = '';
-    $scope.style = '';
-    $scope.size = '';
-    $scope.qty = '';
-    $scope.pounds = '';
-     });
-    // console.log("outside of http");
-    // //console.log(idData[0].id);
-    // console.log($scope.idData);
-
-    
-  }
-}); -->

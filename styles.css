@@ -185,7 +185,6 @@ select {
   width: 70%;
   /* border: 3px solid green; */
   text-align: center;
-
 }
 
 #fieldSetPersonal {
@@ -281,7 +280,17 @@ select {
   color: green;
 }
 
-#addId, #addUserid, #addEmpnum, #addFname, #addLname, #addSaledate, #addVariety, #addStyle, #addSize, #addQty, #addPounds {
+#addId,
+#addUserid,
+#addEmpnum,
+#addFname,
+#addLname,
+#addSaledate,
+#addVariety,
+#addStyle,
+#addSize,
+#addQty,
+#addPounds {
   width: 9%;
 }
 

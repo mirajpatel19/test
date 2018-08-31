@@ -29,9 +29,9 @@
     <br />
 
     <div id="filter">
-    <b>Filter:</b>
-    <input ng-model="query" type="text" />
-    <a id="navigateLink" href="/picklist.html">Go to Pick List</a>
+      <b>Filter:</b>
+      <input ng-model="query" type="text" />
+      <a id="navigateLink" href="/picklist.html">Go to Pick List</a>
     </div>
     <br>
 
@@ -114,10 +114,8 @@
           })
           .then(function (response) {
             $scope.orders = response.data;
-            //console.log($scope.orders);
             $scope.sortField = 'userid';
             $scope.reverse = true;
-            //console.log(response.data, "Response from post request!")
           })
       }
 
@@ -155,10 +153,6 @@
             $scope.idData = response.data;
             console.log("into response for addFunc: ");
 
-            console.log("here is id:");
-            console.log($scope.idData);
-            console.log($scope.idData[0].id);
-
             $scope.orders.push({
               'id': $scope.idData[0].id,
               'userid': $scope.userid,
@@ -173,6 +167,7 @@
               'pounds': $scope.pounds
             });
 
+            //Clearing form values
             $scope.userid = '';
             $scope.empnum = '';
             $scope.fname = '';
@@ -184,11 +179,6 @@
             $scope.qty = '';
             $scope.pounds = '';
           });
-        // console.log("outside of http");
-        // //console.log(idData[0].id);
-        // console.log($scope.idData);
-
-
       }
     });
   </script>

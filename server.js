@@ -701,8 +701,8 @@ app.post('/addOrder', function (req, res) {
     }
     console.log("for price query");
     console.log(result.rows);
-    console.log("Just price");
-    console.log(result.rows[0].price);
+    // console.log("Just price");
+    // console.log(result.rows[0].price);
 
     console.log("into query to look for price!!");
     if (result.rowCount == 1) {
@@ -716,6 +716,20 @@ app.post('/addOrder', function (req, res) {
         }
         console.log("inside end of if statement!");
       });
+      //get ID num to insert into the view.
+      client.query("select id from orders where userid=$1 and saledate=$2 and variety=$3 and style=$4 and size=$5 and qty=$6 and pounds=$7", [addOrder.userid, addOrder.saledate, addOrder.variety, addOrder.style, addOrder.size, addOrder.qty, addOrder.pounds], function (err, resu, fields) {
+        if (err) {
+          throw err;
+        }
+        console.log("from the query");
+        console.log(resu.rowCount);
+        //console.log(resu);
+        if (resu.rowCount == 1) {
+          console.log('here are rows');
+          console.log(resu.rows);
+          res.send(resu.rows);
+        }
+      });
     } else {
       client.query("INSERT INTO orders(userid, saledate, variety, style, size, qty, pounds, price) \
       VALUES($1, $2, $3, $4, $5, $6, $7, 0.00)", [addOrder.userid, addOrder.saledate, addOrder.variety, addOrder.style, addOrder.size, addOrder.qty, addOrder.pounds], function (err, result, fields) {
@@ -724,25 +738,25 @@ app.post('/addOrder', function (req, res) {
         }
         console.log("inside else statement!");
       });
+      //get ID num to insert into the view.
+      client.query("select id from orders where userid=$1 and saledate=$2 and variety=$3 and style=$4 and size=$5 and qty=$6 and pounds=$7", [addOrder.userid, addOrder.saledate, addOrder.variety, addOrder.style, addOrder.size, addOrder.qty, addOrder.pounds], function (err, resu, fields) {
+        if (err) {
+          throw err;
+        }
+        console.log("from the query");
+        console.log(resu.rowCount);
+        //console.log(resu);
+        if (resu.rowCount == 1) {
+          console.log('here are rows');
+          console.log(resu.rows);
+          res.send(resu.rows);
+        }
+      });
     }
   });
 
   console.log("Database connected for addOrder!");
 
-  //SELECT distinct fname FROM users where fname=$1 and lname=$2 and empnum=$3", [firstname, lastname, employeenumber]
-  // client.query("select id from orders where userid=$1 and saledate=$2 and variety=$3 and style=$4 and size=$5 and qty=$6 and pounds=$7", [addOrder.userid, addOrder.saledate, addOrder.variety, addOrder.style, addOrder.size, addOrder.qty, addOrder.pounds], function (err, result, fields) {
-  //   if (err) {
-  //     throw err;
-  //   }
-  //   console.log("from the query");
-  //   console.log(result.rowCount);
-  //   //console.log(result);
-  //   if (result.rowCount == 1) {
-  //     console.log('here are rows');
-  //     console.log(result.rows);
-  //     res.send(result.rows);
-  //   }
-  // });
 });
 
 app.post('/picklist', function (req, res) {
