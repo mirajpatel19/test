@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="app.js"></script>
   <script src="controllers.js"></script>
+  <!-- <script src="orderctrl.js"></script> -->
 </head>
 
 <body>
@@ -40,29 +41,29 @@
     <table id="sortTable">
       <tr>
         <th>
-          <a id='id' href="" ng-click="sortField = 'id'; reverse = !reverse">Id</th>
+          <a id='heading' href="" ng-click="sortField = 'id'; reverse = !reverse">Id</th>
         <th>
-          <a id="useridHeading" href="" ng-click="sortField = 'userid'; reverse = !reverse">Box #</th>
+          <a id="heading" href="" ng-click="sortField = 'userid'; reverse = !reverse">Box #</th>
         <th>
-          <a id="empnumHeading" href="" ng-click="sortField = 'empnum'; reverse = !reverse">Employee Number</th>
+          <a id="heading" href="" ng-click="sortField = 'empnum'; reverse = !reverse">Employee Number</th>
         <th>
-          <a id="fnameHeading" href="" ng-click="sortField = 'fname'; reverse = !reverse">First Name</th>
+          <a id="heading" href="" ng-click="sortField = 'fname'; reverse = !reverse">First Name</th>
         <th>
-          <a id="lnameHeading" href="" ng-click="sortField = 'lname'; reverse = !reverse">Last Name</th>
+          <a id="heading" href="" ng-click="sortField = 'lname'; reverse = !reverse">Last Name</th>
         <th>
-          <a id="saledateHeading" href="" ng-click="sortField = 'saledate'; reverse = !reverse">Sale Date</th>
+          <a id="heading" href="" ng-click="sortField = 'saledate'; reverse = !reverse">Sale Date</th>
         <th>
-          <a id="varietyHeading" href="" ng-click="sortField = 'variety'; reverse = !reverse">Variety</th>
+          <a id="heading" href="" ng-click="sortField = 'variety'; reverse = !reverse">Variety</th>
         <th>
-          <a id="styleHeading" href="" ng-click="sortField = 'style'; reverse = !reverse">Style</th>
+          <a id="heading" href="" ng-click="sortField = 'style'; reverse = !reverse">Style</th>
         <th>
-          <a id="sizeHeading" href="" ng-click="sortField = 'size'; reverse = !reverse">Size</th>
+          <a id="heading" href="" ng-click="sortField = 'size'; reverse = !reverse">Size</th>
         <th>
-          <a id="qtyHeading" href="" ng-click="sortField = 'qty'; reverse = !reverse">Qty</th>
+          <a id="heading" href="" ng-click="sortField = 'qty'; reverse = !reverse">Qty</th>
         <th>
-          <a id="qtyHeading" href="" ng-click="sortField = 'pounds'; reverse = !reverse">Pounds</th>
+          <a id="heading" href="" ng-click="sortField = 'pounds'; reverse = !reverse">Pounds</th>
         <th>
-          <a id="orderdateHeading" href="" ng-click="sortField = 'orderdate'; reverse = !reverse">Order Date</th>
+          <a id="heading" href="" ng-click="sortField = 'orderdate'; reverse = !reverse">Order Date</th>
         <th>Delete</th>
       </tr>
       <tr id="sortData" ng-repeat="(key,value) in orders | filter:query | orderBy:sortField:!reverse">
@@ -99,6 +100,9 @@
       <input id="add" type="submit" value="add">
     </form>
   </div>
+  <p>5 times 10 is:</p>
+
+  <p>{{filter}}</p>
 </body>
 
 </html>

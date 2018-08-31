@@ -270,6 +270,11 @@ select {
   text-align: center;
 }
 
+#sortData:nth-child(odd) {
+  background-color: #d8f8f5;
+  /* background-color: #c5f5f0; */
+}
+
 #navigateLink {
   color: red;
   //text-decoration:none;
@@ -296,6 +301,11 @@ select {
 
 #add {
   width: 5.8%;
+}
+
+#addPrice,
+#addSaleDate {
+  text-align: center;
 }
 
 #setPricesButton {
