@@ -242,7 +242,7 @@ app.get('/cheeseorderform', function (req, res, next) {
             //If array is empty.
             if ((array[i].variety == '-' && array[i].style == '-' && array[i].size == 0 && array[i].qty == 0) || (array[i].variety == '' && array[i].style == '' && array[i].size == 0 && array[i].qty == 0)) {
               console.log('No values inside');
-              //Else add the vilues into orders table.
+              //Else add the values into orders table.
             } else {
               console.log('There are values inside MR.: ' + array[i].variety + ' ' + array[i].style + ' ' + array[i].size + ' ' + array[i].qty);
               //search for userid into user table and insert it into orders table.

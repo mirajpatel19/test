@@ -6,6 +6,8 @@
   <title>Pay Roll</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <link rel="stylesheet" href="styles.css">
+  <script src="app.js"></script>
+  <script src="controllers.js"></script>
 </head>
 
 <body>
@@ -56,29 +58,6 @@
       </tr>
     </table>
   </div>
-
-  <script>
-    var app = angular.module('myApp', []);
-    app.controller('payRollCtrl', function ($scope, $http) {
-      $scope.date = ' ';
-
-      $scope.send = function () {
-        console.log("inside send function for payroll.html");
-
-        var posting = $http({
-          method: 'POST',
-          url: '/payRoll',
-          data: {
-            'date': $scope.data.date,
-          }
-        }).then(function (response) {
-          $scope.orders = response.data;
-          $scope.sortField = 'userid';
-          $scope.reverse = true;
-        })
-      }
-    });
-  </script>
 </body>
 
 </html>
