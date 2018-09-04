@@ -7,7 +7,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js"></script>
-  <!-- <script src="controllers.js"></script> -->
   <script src="picklistctrl.js"></script>
 </head>
 
@@ -60,14 +59,10 @@
         <td>{{value.size}}</td>
         <td>{{value.qty}}</td>
         <td>
-          <a href="/orders.html" target="_blank" ng-click="getOrder(value.variety, key)"> {{value.count}}</a>
+          <a href="/orders.html" target="_blank"> {{value.count}}</a>
         </td>
       </tr>
     </table>
-
-    <p>5 times 10 is:</p>
-
-    <p>{{test}}</p>
   </div>
 </body>
 
