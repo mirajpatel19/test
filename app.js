@@ -1,26 +1,21 @@
 var app = angular.module('myApp', []);
 
-
-
-
-
-
-// .config(function($routeProvider) {
-//     $routeProvider
-//         .when('/orders', {
-//             templateUrl: 'orders.html',
-//             controller: 'controllers.js'
-//         })
-//         .when('/picklist', {
-//             templateUrl: 'picklist.html',
-//             controller: 'controllers.js'
-//         })
-//         .when('/payroll', {
-//             templateUrl: 'payroll.html',
-//             controller: 'controllers.js'
-//         })
-//         .when('/setprices', {
-//             templateUrl: 'setprices.html',
-//             controller: 'controllers.js'
-//         })
-// })
+app.config(function($routeProvider) {
+    $routeProvider
+        .when('/orders', {
+            templateUrl: 'orders.html',
+            controller: 'orderctrl.js'
+        })
+        .when('/picklist', {
+            templateUrl: 'picklist.html',
+            controller: 'picklistctrl.js'
+        })
+        .when('/payroll', {
+            templateUrl: 'payroll.html',
+            controller: 'payrollctrl.js'
+        })
+        .when('/setprices', {
+            templateUrl: 'setprices.html',
+            controller: 'setpricesctrl.js'
+        })
+})
