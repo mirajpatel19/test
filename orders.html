@@ -7,8 +7,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js"></script>
-  <script src="controllers.js"></script>
-  <!-- <script src="orderctrl.js"></script> -->
+  <!-- <script src="controllers.js"></script> -->
+  <script src="orderctrl.js"></script>
 </head>
 
 <body>
@@ -99,10 +99,17 @@
       <input id="addPounds" type="text" ng-model="pounds" placeholder="Pounds" required>
       <input id="add" type="submit" value="add">
     </form>
-  </div>
-  <p>5 times 10 is:</p>
 
-  <p>{{filter}}</p>
+    <div data-ng-init="onloadFun()">
+      <!-- <p>5 times 10 is:</p>
+
+      <p>{{fullOrder}}</p> -->
+
+      <!-- test -->
+      <p>{{test}}</p>
+    </div>
+
+  </div>
 </body>
 
 </html>

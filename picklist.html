@@ -7,8 +7,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js"></script>
-  <script src="controllers.js"></script>
-  <!-- <script src="picklistctrl.js"></script> -->
+  <!-- <script src="controllers.js"></script> -->
+  <script src="picklistctrl.js"></script>
 </head>
 
 <body>
@@ -53,21 +53,21 @@
         <th>
           <a id="heading" href="" ng-click="sortField = 'count'; reverse = !reverse">Orders</th>
       </tr>
-      <tr id="sortData" ng-repeat="order in orders | filter:query | orderBy:sortField:!reverse">
-        <td>{{order.saledate}}</td>
-        <td>{{order.variety}}</td>
-        <td>{{order.style}}</td>
-        <td>{{order.size}}</td>
-        <td>{{order.qty}}</td>
+      <tr id="sortData" ng-repeat="(key,value) in orders | filter:query | orderBy:sortField:!reverse">
+        <td>{{value.saledate}}</td>
+        <td>{{value.variety}}</td>
+        <td>{{value.style}}</td>
+        <td>{{value.size}}</td>
+        <td>{{value.qty}}</td>
         <td>
-          <a href="/orders.html" target="_blank" ng-click="getOrder($index)"> {{order.count}}</a>
+          <a href="/orders.html" target="_blank" ng-click="getOrder(value.variety, key)"> {{value.count}}</a>
         </td>
       </tr>
     </table>
 
     <p>5 times 10 is:</p>
 
-    <p>{{num}}</p>
+    <p>{{test}}</p>
   </div>
 </body>
 

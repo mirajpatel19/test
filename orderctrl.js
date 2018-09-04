@@ -1,5 +1,39 @@
-app.controller('orderCtrl', function ($scope, $http) {
+app.controller('orderCtrl', function ($scope, $http, myService, $rootScope) {
     $scope.date = ' ';
+
+    //onload function
+    $scope.onloadFun = function () {
+        //alert(1);
+        //$scope.fullOrder = 'hello';
+
+        // //calling the function
+        // $scope.fullOrder = myService.myFunc();
+        // console.log('here is the service');
+        // console.log($scope.fullOrder);
+
+        //test
+        test = myService.getOrder();
+        console.log(test);
+        console.log($rootScope.test, "TESTING ROOT SCOPE")
+        console.log('hi');
+    }
+
+    var testing = function () {
+        //alert(1);
+        //$scope.fullOrder = 'hello';
+
+        // //calling the function
+        // $scope.fullOrder = myService.myFunc();
+        // console.log('here is the service');
+        // console.log($scope.fullOrder);
+
+        //test
+        var test2 = myService.getOrder();
+        console.log(test2);
+        console.log('hi again...');
+    }
+    setTimeout(testing(), 2000);
+
 
     // $scope.filter = myService.style();
     $scope.send = function () {
